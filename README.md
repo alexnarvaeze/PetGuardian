@@ -1,70 +1,115 @@
-# Getting Started with Create React App
+# Pet Guardian
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Pet Guardian** is a health and wellness app designed to help pet owners monitor and manage their pets' health needs efficiently. This app provides tools for tracking medical records, vaccination schedules, and overall wellness, making it easier for pet owners to focus on proactive care.
 
-## Available Scripts
+## Table of Contents
 
-In the project directory, you can run:
+1. [Project Overview](#project-overview)
+2. [Features](#features)
+3. [Installation](#installation)
+4. [Usage](#usage)
+5. [API Endpoints](#api-endpoints)
+6. [Technologies Used](#technologies-used)
+7. [Folder Structure](#folder-structure)
+8. [Contributing](#contributing)
+9. [License](#license)
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Project Overview
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Pet Guardian offers a centralized solution for pet owners to track and manage their pets' health information, schedule check-ups, and get reminders for vaccinations and other essential health milestones.
 
-### `npm test`
+## Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **User Authentication**: Signup and login for secure access
+- **Health Tracking**: Keep a log of pet medical records, medications, and treatments
+- **Vaccination Reminders**: Stay on top of vaccination schedules with reminders
+- **Wellness Insights**: Monitor weight, activity levels, and other health metrics
 
-### `npm run build`
+## Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Prerequisites
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- [Node.js](https://nodejs.org/) (version 14 or higher)
+- [SQLite3](https://sqlite.org/)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Steps
 
-### `npm run eject`
+1. **Clone the repository**:
+    ```bash
+    git clone https://github.com/yourusername/pet-guardian.git
+    cd pet-guardian
+    ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. **Install dependencies**:
+    ```bash
+    # Install backend dependencies
+    cd backend
+    npm install
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    # Install frontend dependencies
+    cd ../client
+    npm install
+    ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+3. **Start the SQLite Database**:
+   Ensure that you have SQLite3 installed, and that your database (`database.sqlite`) is in the backend folder.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+4. **Run the project**:
+    ```bash
+    # Start the backend server
+    cd backend
+    node server.js
 
-## Learn More
+    # Start the frontend
+    cd ../client
+    npm start
+    ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Usage
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. **Signup**: Go to `/signup` to create a new account.
+2. **Login**: Log in at `/login` using your credentials.
+3. **Access Protected Route**: After login, navigate to `/home` to access the main app functionality.
 
-### Code Splitting
+## API Endpoints
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### POST `/api/auth/signup`
 
-### Analyzing the Bundle Size
+- **Description**: Register a new user
+- **Body**: `{ "name": "Name", "username": "Username", "password": "Password" }`
+- **Response**: Success or error message
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### POST `/api/auth/login`
 
-### Making a Progressive Web App
+- **Description**: Authenticate user and retrieve token
+- **Body**: `{ "username": "Username", "password": "Password" }`
+- **Response**: Success message and token, or error message
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Protected Routes
 
-### Advanced Configuration
+Access to routes like `/home` and other pet health features requires a valid token.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Technologies Used
 
-### Deployment
+- **Frontend**: React, Axios, React Router
+- **Backend**: Express.js
+- **Database**: SQLite
+- **Authentication**: JSON Web Token (JWT)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Folder Structure
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```plaintext
+pet-guardian/
+├── backend/              # Backend application
+│   ├── server.js         # Main server file
+│   ├── database.sqlite   # SQLite database file
+│   └── package.json      # Backend dependencies
+├── client/               # Frontend React application
+│   ├── public/
+│   └── src/
+│       ├── Components/   # React components for Signup, Login, and main app features
+│       ├── App.js        # Main App component
+│       └── index.js      # Entry point for React
+├── README.md             # Project documentation
