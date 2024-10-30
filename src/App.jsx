@@ -35,6 +35,7 @@ const router = createBrowserRouter([
     element: (
       <div>
         <ProtectedRoute>
+          <div>Yaa it works halo 3 is besst game</div>
         </ProtectedRoute>
       </div>
     ),

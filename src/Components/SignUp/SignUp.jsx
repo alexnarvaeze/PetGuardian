@@ -7,11 +7,10 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./SignUp.css";
 
-const ADDRESS = process.env.REACT_APP_CURR_ADDRESS;
+const API_URL = "http://localhost:5000/api"; // Hardcoded API URL
 
 const SignUp = () => {
   const [signupFail, setSignupFail] = useState("");
-
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
@@ -19,6 +18,7 @@ const SignUp = () => {
     password: "",
     retypePassword: "",
   });
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -27,32 +27,25 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.password !== formData.retypePassword) {
-      const errorMessage = "Passwords must match!";
-      setSignupFail(errorMessage);
+      setSignupFail("Passwords must match!");
       return;
     }
 
     try {
       const response = await axios.post(
-        `http://${ADDRESS}:8005/api/auth/signup`,
+        `${API_URL}/auth/signup`, // Consistent usage of hardcoded API URL
         formData
       );
-      if (response.data.token) {
-        localStorage.setItem("userToken", response.data.token);
-        console.log("Signup success:", response.data.message);
+      if (response.status === 201) {
+        localStorage.setItem("userToken", "");
         navigate("/Home", {
-          state: {
-            name: formData.name,
-            budget: 0, // Default value since budget starts at 0
-          },
+          state: {name: formData.name},
         });
       } else {
-        const errorMessage = "Signup failed";
-        setSignupFail(errorMessage);
+        setSignupFail("Signup failed");
       }
     } catch (error) {
-      const errorMessage = "Signup failed";
-      setSignupFail(errorMessage);
+      setSignupFail("Signup failed");
     }
   };
 
@@ -62,7 +55,6 @@ const SignUp = () => {
       <Box
         className="form-box"
         component="form"
-        sx={{ "& > :not(style)": { m: 1, width: "40ch" } }}
         noValidate
         autoComplete="off"
         onSubmit={handleSubmit}
@@ -94,7 +86,7 @@ const SignUp = () => {
           onChange={handleChange}
         />
         <TextField
-          id="outlined-password"
+          id="outlined-retype-password"
           label="Retype Password"
           variant="outlined"
           type="password"
@@ -104,22 +96,13 @@ const SignUp = () => {
         />
         <Button
           className="redirect"
-          onClick={() => {
-            navigate("/login");
-          }}
+          onClick={() => navigate("/login")}
           type="button"
         >
-          <span>{"Already have an account?"}</span>
+          Already have an account?
         </Button>
         <Button
           className="center-button"
-          sx={{
-            backgroundColor: "rgb(71,140,209)",
-            color: "white",
-            "&:hover": {
-              backgroundColor: "rgb(0,72,120)",
-            },
-          }}
           variant="contained"
           type="submit"
         >
