@@ -7,7 +7,7 @@ import logo from "../Capital_One_logo.png";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
 
-const ADDRESS = process.env.REACT_APP_CURR_ADDRESS;
+const API_URL = "http://localhost:5000/api";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -22,54 +22,41 @@ const Login = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const fetchUserData = async (token) => {
-    try {
-      const response = await axios.get(
-        `http://${ADDRESS}:8005/api/auth/user-data`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      console.log("Fetched user data:", response.data);
-      navigate("/Home", {
-        state: {
-          name: response.data.name,
-          budget: response.data.budget,
-          totalExpenses: response.data.totalExpenses,
-          groceryExpenses: response.data.groceryExpenses,
-          billsExpenses: response.data.billsExpenses,
-          subscriptionExpenses: response.data.subscriptionExpenses,
-          gasExpenses: response.data.gasExpenses,
-          otherExpenses: response.data.otherExpenses,
-          savings: response.data.savings,
-        },
-      });
-    } catch (error) {
-      console.error("Failed to fetch user data:", error);
-      setLoginFail("Failed to load user data");
-    }
-  };
+  // const fetchUserData = async (token) => {
+  //   try {
+  //     const response = await axios.get(
+  //        `${API_URL}/auth/signup`,
+  //       {
+  //         headers: { Authorization: `Bearer ${token}` },
+  //       }
+  //     );
+  //     console.log("Fetched user data:", response.data);
+  //     navigate("/Home", {
+  //       state: {
+  //         name: response.data.name,
+  //       },
+  //     });
+  //   } catch (error) {
+  //     console.error("Failed to fetch user data:", error);
+  //     setLoginFail("Failed to load user data");
+  //   }
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        `http://${ADDRESS}:8005/api/auth/login`,
-        formData
-      );
-      if (response.data.message === "Login successful!") {
-        localStorage.setItem("userToken", response.data.token);
-        console.log("Login success!");
-        fetchUserData(response.data.token);
+      const response = await axios.post(`${API_URL}/auth/login`, formData);
+      if (response.status === 200) {
+        // Assuming we receive a token or user data on successful login
+        localStorage.setItem("userToken", "Login"); // Modify according to your needs
+        navigate("/Home");
       } else {
-        setLoginFail("Login Failed: " + response.data.message);
+        setLoginFail("Login failed");
       }
     } catch (error) {
-      const errorMessage = "Login failed";
-      setLoginFail(errorMessage);
+      setLoginFail(error.response?.data.message || "Login failed");
     }
   };
-
   return (
     <div className="body">
       <img src={logo} alt="Capital One Logo" className="login-logo" />
