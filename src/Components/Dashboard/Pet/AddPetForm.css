@@ -1,0 +1,34 @@
+.add-pet-form {
+    padding: 1rem;
+    text-align: left;
+  }
+  
+  .add-pet-form form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .add-pet-form label {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+  
+  .add-pet-form input,
+  .add-pet-form select {
+    padding: 0.5rem;
+    font-size: 1rem;
+    margin-top: 0.3rem;
+  }
+  
+  .add-pet-form button {
+    margin-top: 1rem;
+    padding: 0.7rem;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .add-pet-form button[type="button"] {
+    background-color: #ccc;
+    margin-left: 0.5rem;
+  }
+  

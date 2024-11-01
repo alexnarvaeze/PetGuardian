@@ -8,6 +8,8 @@ import "./App.css";
 import Login from "./Components/Login/Login.jsx";
 import SignUp from "./Components/SignUp/SignUp.jsx";
 import ProtectedRoute from "./ProtectedRoute.jsx";
+import Navbar from "./Components/Navbar/Navbar.jsx";
+import Dashboard from "./Components/Dashboard/Dashboard.jsx";
 
 const router = createBrowserRouter([
   {
@@ -35,7 +37,8 @@ const router = createBrowserRouter([
     element: (
       <div>
         <ProtectedRoute>
-          <div>Yaa it works halo 3 is besst game</div>
+          <Navbar />
+          <Dashboard />
         </ProtectedRoute>
       </div>
     ),

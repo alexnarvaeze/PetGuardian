@@ -1,0 +1,23 @@
+.pet-list {
+    padding: 1rem;
+    text-align: left;
+  }
+  
+  .pet-card {
+    border: 1px solid #ddd;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+  }
+  
+  .pet-card h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #007bff;
+  }
+  
+  .pet-card p {
+    margin: 0.3rem 0;
+    font-size: 1rem;
+  }
+  
