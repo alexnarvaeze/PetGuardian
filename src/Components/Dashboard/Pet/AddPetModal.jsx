@@ -9,18 +9,38 @@ const AddPetModal = ({ isOpen, onClose, onAddPet }) => {
     breed: "",
     weight: "",
     age: "",
+    image: "",
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setPetData({ ...petData, [name]: value });
   };
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result;
+        console.log("Base64 String:", base64String); // Debug check
+        setPetData({ ...petData, image: base64String });
+      };
+      reader.readAsDataURL(file); // Convert image to base64 string
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     onAddPet(petData);
     onClose(); // Close the modal after adding pet
-    setPetData({ name: "", species: "", breed: "", weight: "", age: "" }); // Reset form
+    setPetData({
+      name: "",
+      species: "",
+      breed: "",
+      weight: "",
+      age: "",
+      image: "",
+    }); // Reset form
   };
 
   if (!isOpen) return null; // Don't render anything if the modal isn't open
@@ -38,14 +58,19 @@ const AddPetModal = ({ isOpen, onClose, onAddPet }) => {
             onChange={handleChange}
             required
           />
-          <input
-            type="text"
+          <select
             name="species"
-            placeholder="Species (Dog/Cat)"
             value={petData.species}
             onChange={handleChange}
             required
-          />
+          >
+            <option value="Dog">Dog</option>
+            <option value="Cat">Cat</option>
+            <option value="Turtle">Turtle</option>
+            <option value="Hamster">Hamster</option>
+            <option value="Bird">Bird</option>
+            <option value="Fish">Fish</option>
+          </select>
           <input
             type="text"
             name="breed"
@@ -69,6 +94,11 @@ const AddPetModal = ({ isOpen, onClose, onAddPet }) => {
             value={petData.age}
             onChange={handleChange}
             required
+          />
+          <input
+            type="file"
+            accept="image/jpeg, image/png, image/jpg"
+            onChange={handleImageChange}
           />
           <button type="submit">Add Pet</button>
         </form>

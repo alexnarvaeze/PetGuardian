@@ -16,10 +16,15 @@ const PetList = ({ pets }) => {
           <p>Breed: {pet.breed}</p>
           <p>Weight: {pet.weight} lbs</p>
           <p>Age: {pet.age} years</p>
+          {pet.image && (
+            <div className="pet-image-container">
+              <img src={pet.image} alt={`${pet.name}`} className="pet-image" />
+            </div>
+          )}
         </div>
       ))}
     </div>
   );
 };
 
-export default PetList
+export default PetList;

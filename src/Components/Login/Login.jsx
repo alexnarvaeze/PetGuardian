@@ -3,7 +3,7 @@ import axios from "axios";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import logo from "../Capital_One_logo.png";
+import logo from "../images/PetGuardian_Logo.jpg";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
 
@@ -59,7 +59,7 @@ const Login = () => {
   };
   return (
     <div className="body">
-      <img src={logo} alt="Capital One Logo" className="login-logo" />
+      <img src={logo} alt="PetGuardian Logo" className="login-logo" />
       <Box
         className="form-box"
         component="form"

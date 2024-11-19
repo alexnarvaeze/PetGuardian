@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import logo from "../Capital_One_logo.png";
+import logo from "../images/PetGuardian_Logo.jpg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./SignUp.css";
@@ -39,7 +39,7 @@ const SignUp = () => {
       if (response.status === 201) {
         localStorage.setItem("userToken", "");
         navigate("/Home", {
-          state: {name: formData.name},
+          state: { name: formData.name },
         });
       } else {
         setSignupFail("Signup failed");
@@ -51,7 +51,7 @@ const SignUp = () => {
 
   return (
     <div className="body">
-      <img src={logo} alt="Capital One Logo" className="login-logo" />
+      <img src={logo} alt="PetGuardian Logo" className="login-logo" />
       <Box
         className="form-box"
         component="form"
@@ -101,11 +101,7 @@ const SignUp = () => {
         >
           Already have an account?
         </Button>
-        <Button
-          className="center-button"
-          variant="contained"
-          type="submit"
-        >
+        <Button className="center-button" variant="contained" type="submit">
           Sign Up
         </Button>
       </Box>

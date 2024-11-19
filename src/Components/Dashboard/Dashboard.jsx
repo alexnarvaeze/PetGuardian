@@ -36,7 +36,7 @@ const Dashboard = () => {
     <div className="dashboard-container">
       {/* Greeting Section */}
       <div className="dashboard-greeting">
-        <h1>Hello,</h1>
+        <h1>Hey</h1>
         <h1 className="username">Matthew</h1>
       </div>
 
@@ -67,22 +67,21 @@ const Dashboard = () => {
               <p>Weight: {pets[selectedPetIndex].weight} lbs</p>
               <p>Age: {pets[selectedPetIndex].age} years</p>
             </div>
-            <div className="stats-card">
-              <h4>Status</h4>
-              <p>Stats will go here.</p>
-            </div>
           </div>
         )}
       </div>
 
       {pets.length > 0 && (
         <div className="pet-navigation">
-          <button className="nav-button" onClick={handlePrevPet}>
-            Previous
-          </button>
-          <button className="nav-button" onClick={handleNextPet}>
-            Next
-          </button>
+          <div className="prev/next">
+            <button className="nav-button" onClick={handlePrevPet}>
+              Previous
+            </button>
+            <button className="nav-button" onClick={handleNextPet}>
+              Next
+            </button>
+          </div>
+
           <button
             className="add-pet-button"
             onClick={() => setIsModalOpen(true)}

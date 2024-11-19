@@ -13,8 +13,9 @@
   }
 
   .login-logo{
-    width: 150px;
+    width: 300px;
     margin-bottom: 20px;
+    border-radius: 2px;
   }
   
   .form-box {
