@@ -8,10 +8,15 @@ body {
   }
   
   .dashboard-greeting {
-    font-size: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    font-size: 16 px;
+    font-weight: 200;
     margin-bottom: 20px;
     height: auto;
-    width: 250px;
+    width: auto;
   }
   
   .dashboard-greeting h1 {

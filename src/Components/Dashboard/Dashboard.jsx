@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import AddPetModal from "./Pet/AddPetModal";
 import "./Dashboard.css";
 import SadDog from "../images/Sad-Dog.png"; // Import the sad dog image
+import Medical from "../Dashboard/Medical/Medical"
 
 const Dashboard = () => {
   const [pets, setPets] = useState([]); // State to hold pet list
@@ -34,15 +35,13 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
-      {/* Greeting Section */}
-      <div className="dashboard-greeting">
-        <h1>Hello,</h1>
-        <h1 className="username">Matthew</h1>
-      </div>
-
       <div className="no-pets-view">
         {pets.length === 0 ? (
           <div className="no-pet-container">
+              <div className="dashboard-greeting">
+            <h1>Hello,</h1>
+            <h1 className="username">Matthew</h1>
+          </div>
             <img
               src={SadDog} // Use imported sad dog image
               alt="Cute Dog"
@@ -59,20 +58,29 @@ const Dashboard = () => {
             </div>
           </div>
         ) : (
-          <div className="pets-view">
-            <div className="pet-card">
-              <h3>{pets[selectedPetIndex].name}</h3>
-              <p>Species: {pets[selectedPetIndex].species}</p>
-              <p>Breed: {pets[selectedPetIndex].breed}</p>
-              <p>Weight: {pets[selectedPetIndex].weight} lbs</p>
-              <p>Age: {pets[selectedPetIndex].age} years</p>
+          <div>
+            <div className="no-pet-container">
+              <div className="dashboard-greeting">
+                <h1>Hello,</h1>
+                <h1 className="username">Matthew</h1>
+              </div>
             </div>
-            <div className="stats-card">
-              <h4>Status</h4>
-              <p>Stats will go here.</p>
+            <div className="pets-view">
+              <div className="pet-card">
+                <h3>{pets[selectedPetIndex].name}</h3>
+                <p>Species: {pets[selectedPetIndex].species}</p>
+                <p>Breed: {pets[selectedPetIndex].breed}</p>
+                <p>Weight: {pets[selectedPetIndex].weight} lbs</p>
+                <p>Age: {pets[selectedPetIndex].age} years</p>
+              </div>
+              <div className="stats-card">
+                <h4>Status</h4>
+                <p>Stats will go here.</p>
+              </div>
             </div>
           </div>
         )}
+        <Medical />
       </div>
 
       {pets.length > 0 && (
