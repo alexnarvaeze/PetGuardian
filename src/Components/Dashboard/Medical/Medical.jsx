@@ -1,111 +1,244 @@
-import React, { useState } from 'react'
-import "../Medical/Medical.css"
+import React, { useState, useEffect } from "react";
+import "../Medical/Medical.css";
 
-// Helper function to calculate the "Next Due" date
-const calculateNextDue = (dateReceived, intervalMonths) => {
-  const receivedDate = new Date(dateReceived);
-  receivedDate.setMonth(receivedDate.getMonth() + intervalMonths);
-  return receivedDate.toISOString().split("T")[0]; // Format as YYYY-MM-DD
-};
+const Medical = () => {
+  const [currentSection, setCurrentSection] = useState(0); // Track which section is being viewed
+  const [pets, setPets] = useState([]);
+  const [bloodwork, setBloodwork] = useState([]);
+  const [vaccines, setVaccines] = useState([]);
+  const [medications, setMedications] = useState([]);
 
-function Medical() {
+  // Form state
+  const [formData, setFormData] = useState({
+    petId: "",
+    testDate: "",
+    notes: "",
+    vaccineName: "",
+    lastVaccineDate: "",
+    nextVaccineDate: "",
+    medicationName: "",
+    frequency: "",
+  });
 
-  // Define sections
-  const sections = ["Vaccinations", "Bloodwork", "Medication"];
-  // Track the current section index
-  const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
+  const [isEditing, setIsEditing] = useState(false);
+  const [currentItemId, setCurrentItemId] = useState(null);
 
-  // State for lists in each section
-  const [vaccinations, setVaccinations] = useState([
-    { name: "Rabies", date: "2024-01-10" },
-    { name: "Distemper", date: "2024-02-20" },
-    { name: "Rabies", date: "2024-01-10" },
-    { name: "Distemper", date: "2024-02-20" },
-  ]);
-  
-  const [bloodwork, setBloodwork] = useState([
-    { test: "CBC", date: "2024-03-15" },
-    { test: "Liver Panel", date: "2024-04-05" },
-  ]);
-  
-  const [medications, setMedications] = useState([
-    { name: "Antibiotic", dosage: "5mg", date: "2024-05-10" },
-    { name: "Painkiller", dosage: "10mg", date: "2024-06-01" },
-  ]);
+  const userId = 1; // Example: Replace with dynamic user ID, possibly from login context
 
-  // Define intervals in months for each vaccine type
-  const vaccineIntervals = {
-    Rabies: 36, // 3 years
-    Distemper: 12, // 1 year
-    Parvovirus: 12,
-    Hepatitis: 12,
-    // Add more vaccines as needed
+  useEffect(() => {
+    // Fetch pets on initial load
+    fetch(`/api/pets/${userId}`)
+      .then((response) => response.json())
+      .then((data) => setPets(data))
+      .catch((error) => console.error("Error fetching pets:", error));
+  }, [userId]);
+
+  useEffect(() => {
+    // Fetch medical data when pets are loaded
+    if (pets.length > 0) {
+      const petId = pets[0].id; // Load data for the first pet by default
+      fetch(`/api/bloodwork/${petId}`)
+        .then((response) => response.json())
+        .then((data) => setBloodwork(data))
+        .catch((error) => console.error("Error fetching bloodwork:", error));
+
+      fetch(`/api/vaccines/${petId}`)
+        .then((response) => response.json())
+        .then((data) => setVaccines(data))
+        .catch((error) => console.error("Error fetching vaccines:", error));
+
+      fetch(`/api/medications/${petId}`)
+        .then((response) => response.json())
+        .then((data) => setMedications(data))
+        .catch((error) => console.error("Error fetching medications:", error));
+    }
+  }, [pets]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
-  // Move to the previous section
-  const handlePrevious = () => {
-    setCurrentSectionIndex((prevIndex) => 
-      prevIndex === 0 ? sections.length - 1 : prevIndex - 1
-    );
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const url = isEditing
+      ? `/api/${
+          currentSection === 0 ? "bloodwork" : currentSection === 1 ? "vaccines" : "medications"
+        }/${currentItemId}`
+      : `/api/${
+          currentSection === 0 ? "bloodwork" : currentSection === 1 ? "vaccines" : "medications"
+        }`;
+
+    const method = isEditing ? "PUT" : "POST";
+
+    fetch(url, {
+      method: method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => response.json())
+      .then(() => {
+        alert(`${isEditing ? "Updated" : "Added"} successfully!`);
+        setFormData({
+          petId: "",
+          testDate: "",
+          notes: "",
+          vaccineName: "",
+          lastVaccineDate: "",
+          nextVaccineDate: "",
+          medicationName: "",
+          frequency: "",
+        });
+        setIsEditing(false);
+      })
+      .catch((error) => {
+        alert("Error: " + error.message);
+      });
   };
 
-  // Move to the next section
-  const handleNext = () => {
-    setCurrentSectionIndex((prevIndex) => 
-      prevIndex === sections.length - 1 ? 0 : prevIndex + 1
-    );
+  const handleEdit = (itemId, section) => {
+    setIsEditing(true);
+    setCurrentItemId(itemId);
+
+    if (section === "bloodwork") {
+      const item = bloodwork.find((i) => i.id === itemId);
+      setFormData({
+        petId: item.pet_id,
+        testDate: item.test_date,
+        notes: item.notes,
+      });
+    } else if (section === "vaccines") {
+      const item = vaccines.find((i) => i.id === itemId);
+      setFormData({
+        petId: item.pet_id,
+        vaccineName: item.vaccine_name,
+        lastVaccineDate: item.last_vaccine_date,
+        nextVaccineDate: item.next_vaccine_date,
+      });
+    } else if (section === "medications") {
+      const item = medications.find((i) => i.id === itemId);
+      setFormData({
+        petId: item.pet_id,
+        medicationName: item.medication_name,
+        frequency: item.frequency,
+      });
+    }
   };
 
   return (
-    <div className="medical-container">
-      <div className="medical-card">
-        <h3>{sections[currentSectionIndex]}</h3>
-        <h4>Important Dates:</h4>
-        <div className="medical-data">
-        {currentSectionIndex === 0 && (
-            vaccinations.map((vaccine, index) => (
-              <div key={index} className="data-box">
-                <strong>{vaccine.name}</strong>
-                <p>Date Received: {vaccine.date}</p>
-                <p>
-                  Next Due:{" "}
-                  {calculateNextDue(
-                    vaccine.date,
-                    vaccineIntervals[vaccine.name] || 12 // Default to 1 year if not specified
-                  )}
-                </p>
-              </div>
-            ))
-          )}
-         {currentSectionIndex === 1 && (
-            bloodwork.map((test, index) => (
-              <div key={index} className="data-box">
-                <strong>{test.test}</strong>
-                <p>Date: {test.date}</p>
-              </div>
-            ))
-          )}
-          {currentSectionIndex === 2 && (
-            medications.map((med, index) => (
-              <div key={index} className="data-box">
-                <strong>{med.name}</strong>
-                <p>Dosage: {med.dosage}</p>
-                <p>Date: {med.date}</p>
-              </div>
-            ))
-          )}
-        </div>
-        <div className="medical-buttons">
-          <div>Add</div>
-          <div>Edit</div>
-        </div>
-      </div>
-      <div className="section-button-container">
-        <div onClick={handlePrevious}>←</div>
-        <div onClick={handleNext}>→</div>
-      </div>
-    </div>
-  )
-}
+    <div className="container">
+      <h2>Medical Records</h2>
 
-export default Medical
+      {/* Section Buttons */}
+      <div className="section-buttons">
+        <button onClick={() => setCurrentSection(0)}>Bloodwork</button>
+        <button onClick={() => setCurrentSection(1)}>Vaccines</button>
+        <button onClick={() => setCurrentSection(2)}>Medications</button>
+      </div>
+
+      {/* Data Display */}
+      <div className="section">
+        {currentSection === 0 &&
+          bloodwork.map((item) => (
+            <div key={item.id}>
+              <button onClick={() => handleEdit(item.id, "bloodwork")}>Edit</button>
+              <p>{item.test_date}</p>
+              <p>{item.notes}</p>
+            </div>
+          ))}
+        {currentSection === 1 &&
+          vaccines.map((item) => (
+            <div key={item.id}>
+              <button onClick={() => handleEdit(item.id, "vaccines")}>Edit</button>
+              <p>{item.vaccine_name}</p>
+              <p>Last Date: {item.last_vaccine_date}</p>
+              <p>Next Date: {item.next_vaccine_date}</p>
+            </div>
+          ))}
+        {currentSection === 2 &&
+          medications.map((item) => (
+            <div key={item.id}>
+              <button onClick={() => handleEdit(item.id, "medications")}>Edit</button>
+              <p>{item.medication_name}</p>
+              <p>Frequency: {item.frequency}</p>
+            </div>
+          ))}
+      </div>
+
+      {/* Form to Add/Edit Records */}
+      <form onSubmit={handleSubmit}>
+        {currentSection === 0 && (
+          <>
+            <h3>Bloodwork Form</h3>
+            <input
+              type="date"
+              name="testDate"
+              value={formData.testDate}
+              onChange={handleChange}
+            />
+            <textarea
+              name="notes"
+              value={formData.notes}
+              onChange={handleChange}
+              placeholder="Notes"
+            />
+          </>
+        )}
+        {currentSection === 1 && (
+          <>
+            <h3>Vaccine Form</h3>
+            <input
+              type="text"
+              name="vaccineName"
+              value={formData.vaccineName}
+              onChange={handleChange}
+              placeholder="Vaccine Name"
+            />
+            <input
+              type="date"
+              name="lastVaccineDate"
+              value={formData.lastVaccineDate}
+              onChange={handleChange}
+              placeholder="Last Vaccine Date"
+            />
+            <input
+              type="date"
+              name="nextVaccineDate"
+              value={formData.nextVaccineDate}
+              onChange={handleChange}
+              placeholder="Next Vaccine Date"
+            />
+          </>
+        )}
+        {currentSection === 2 && (
+          <>
+            <h3>Medication Form</h3>
+            <input
+              type="text"
+              name="medicationName"
+              value={formData.medicationName}
+              onChange={handleChange}
+              placeholder="Medication Name"
+            />
+            <input
+              type="text"
+              name="frequency"
+              value={formData.frequency}
+              onChange={handleChange}
+              placeholder="Frequency"
+            />
+          </>
+        )}
+        <button type="submit">{isEditing ? "Update" : "Add"}</button>
+      </form>
+    </div>
+  );
+};
+
+export default Medical;

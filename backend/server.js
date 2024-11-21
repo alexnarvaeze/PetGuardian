@@ -35,6 +35,40 @@ db.run(
   }
 );
 
+// Create table for bloodwork
+db.run(`
+  CREATE TABLE IF NOT EXISTS bloodwork (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    pet_id INTEGER,
+    test_date DATE,
+    notes TEXT,
+    FOREIGN KEY(pet_id) REFERENCES pets(id) ON DELETE CASCADE
+  );
+`);
+
+// Create table for vaccines
+db.run(`
+  CREATE TABLE IF NOT EXISTS vaccines (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    pet_id INTEGER,
+    vaccine_name TEXT,
+    last_vaccine_date DATE,
+    next_vaccine_date DATE,
+    FOREIGN KEY(pet_id) REFERENCES pets(id) ON DELETE CASCADE
+  );
+`);
+
+// Create table for medication routine
+db.run(`
+  CREATE TABLE IF NOT EXISTS medications (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    pet_id INTEGER,
+    medication_name TEXT,
+    frequency TEXT,
+    FOREIGN KEY(pet_id) REFERENCES pets(id) ON DELETE CASCADE
+  );
+`);
+
 // Signup route
 app.post("/api/auth/signup", (req, res) => {
   const { name, username, password } = req.body;
@@ -86,6 +120,81 @@ app.post("/api/auth/login", (req, res) => {
   });
 });
 
+// Add a new bloodwork entry
+app.post("/api/bloodwork", (req, res) => {
+  const { pet_id, test_date, notes } = req.body;
+  const sql = `INSERT INTO bloodwork (pet_id, test_date, notes) VALUES (?, ?, ?)`;
+  db.run(sql, [pet_id, test_date, notes], function(err) {
+    if (err) {
+      return res.status(500).json({ message: "Database error.", error: err.message });
+    }
+    res.status(201).json({ message: "Bloodwork added successfully", id: this.lastID });
+  });
+});
+
+// Add a new vaccine entry
+app.post("/api/vaccines", (req, res) => {
+  const { pet_id, vaccine_name, last_vaccine_date, next_vaccine_date } = req.body;
+  const sql = `INSERT INTO vaccines (pet_id, vaccine_name, last_vaccine_date, next_vaccine_date) VALUES (?, ?, ?, ?)`;
+  db.run(sql, [pet_id, vaccine_name, last_vaccine_date, next_vaccine_date], function(err) {
+    if (err) {
+      return res.status(500).json({ message: "Database error.", error: err.message });
+    }
+    res.status(201).json({ message: "Vaccine added successfully", id: this.lastID });
+  });
+});
+
+// Add a new medication entry
+app.post("/api/medications", (req, res) => {
+  const { pet_id, medication_name, frequency } = req.body;
+  const sql = `INSERT INTO medications (pet_id, medication_name, frequency) VALUES (?, ?, ?)`;
+  db.run(sql, [pet_id, medication_name, frequency], function(err) {
+    if (err) {
+      return res.status(500).json({ message: "Database error.", error: err.message });
+    }
+    res.status(201).json({ message: "Medication added successfully", id: this.lastID });
+  });
+});
+
+// Edit a bloodwork entry
+app.put("/api/bloodwork/:id", (req, res) => {
+  const { id } = req.params;
+  const { test_date, notes } = req.body;
+  const sql = `UPDATE bloodwork SET test_date = ?, notes = ? WHERE id = ?`;
+  db.run(sql, [test_date, notes, id], function(err) {
+    if (err) {
+      return res.status(500).json({ message: "Database error.", error: err.message });
+    }
+    res.status(200).json({ message: "Bloodwork updated successfully" });
+  });
+});
+
+// Edit a vaccine entry
+app.put("/api/vaccines/:id", (req, res) => {
+  const { id } = req.params;
+  const { vaccine_name, last_vaccine_date, next_vaccine_date } = req.body;
+  const sql = `UPDATE vaccines SET vaccine_name = ?, last_vaccine_date = ?, next_vaccine_date = ? WHERE id = ?`;
+  db.run(sql, [vaccine_name, last_vaccine_date, next_vaccine_date, id], function(err) {
+    if (err) {
+      return res.status(500).json({ message: "Database error.", error: err.message });
+    }
+    res.status(200).json({ message: "Vaccine updated successfully" });
+  });
+});
+
+// Edit a medication entry
+app.put("/api/medications/:id", (req, res) => {
+  const { id } = req.params;
+  const { medication_name, frequency } = req.body;
+  const sql = `UPDATE medications SET medication_name = ?, frequency = ? WHERE id = ?`;
+  db.run(sql, [medication_name, frequency, id], function(err) {
+    if (err) {
+      return res.status(500).json({ message: "Database error.", error: err.message });
+    }
+    res.status(200).json({ message: "Medication updated successfully" });
+  });
+});
+
 // Example route to retrieve data from the database
 app.get("/api/data", (req, res) => {
   db.all("SELECT * FROM users", [], (err, rows) => { // Changed "your_table" to "users"
@@ -96,6 +205,54 @@ app.get("/api/data", (req, res) => {
     res.json({
       data: rows,
     });
+  });
+});
+
+// Get all pets for a specific user
+app.get("/api/pets/:userId", (req, res) => {
+  const userId = req.params.userId;
+  const sql = `SELECT * FROM pets WHERE owner_id = ?`;
+  db.all(sql, [userId], (err, rows) => {
+    if (err) {
+      return res.status(500).json({ message: "Database error.", error: err.message });
+    }
+    res.json(rows);
+  });
+});
+
+// Get bloodwork for a specific pet
+app.get("/api/bloodwork/:petId", (req, res) => {
+  const petId = req.params.petId;
+  const sql = `SELECT * FROM bloodwork WHERE pet_id = ?`;
+  db.all(sql, [petId], (err, rows) => {
+    if (err) {
+      return res.status(500).json({ message: "Database error.", error: err.message });
+    }
+    res.json(rows);
+  });
+});
+
+// Get vaccines for a specific pet
+app.get("/api/vaccines/:petId", (req, res) => {
+  const petId = req.params.petId;
+  const sql = `SELECT * FROM vaccines WHERE pet_id = ?`;
+  db.all(sql, [petId], (err, rows) => {
+    if (err) {
+      return res.status(500).json({ message: "Database error.", error: err.message });
+    }
+    res.json(rows);
+  });
+});
+
+// Get medications for a specific pet
+app.get("/api/medications/:petId", (req, res) => {
+  const petId = req.params.petId;
+  const sql = `SELECT * FROM medications WHERE pet_id = ?`;
+  db.all(sql, [petId], (err, rows) => {
+    if (err) {
+      return res.status(500).json({ message: "Database error.", error: err.message });
+    }
+    res.json(rows);
   });
 });
 

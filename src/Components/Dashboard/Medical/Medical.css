@@ -1,121 +1,91 @@
-/* Reset and basic styling */
-* {
-  box-sizing: border-box;
+/* General styling for the container */
+.container {
+  padding: 20px;
   font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
+  margin: 0 auto;
+  max-width: 800px;
 }
 
-.medical-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* Header styling */
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Section buttons */
+button {
+  margin: 5px;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  background-color: #f2f2f2;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+button:hover {
+  background-color: #ddd;
+}
+
+/* Form container */
+form {
+  margin-top: 20px;
+  background-color: #f9f9f9;
   padding: 20px;
-  background-color: #f7f7f7; /* Light gray background */
-}
-
-/* Card styling */
-.medical-card {
-  background-color: white;
-  border-radius: 10px;
-  padding: 20px;
-  margin: 10px;
-  flex: 1;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s;
-  min-height: 300px;
-  min-width: 400px;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Hover effect for cards */
-.medical-card:hover {
-  transform: translateY(-5px);
-}
-
-.medical-card h3{
-  text-align: left;
-  color: rgb(23, 27, 27);
-  font-size: 22px;
-  margin-left: 5px;
-  font-weight: 600;
-}
-.medical-card h4{
-  text-align: left;
-  margin-left: 8px;
-  color: rgb(50, 45, 45);
-  font-size: 16px;
-  font-weight: 200;
-}
-.medical-data{
-  height: 180px;
-  background-color: rgb(255, 251, 251);
-  overflow-y: auto;
   border-radius: 5px;
-  margin-top: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-.medical-data::-webkit-scrollbar {
-  width: 8px;
-}
-.medical-data::-webkit-scrollbar-thumb {
-  background-color: #ccc;
+input[type="text"],
+input[type="date"],
+textarea {
+  width: 100%;
+  padding: 8px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
   border-radius: 4px;
 }
-.medical-data::-webkit-scrollbar-thumb:hover {
-  background-color: #aaa;
+
+textarea {
+  height: 100px;
+  resize: vertical;
 }
 
-.medical-buttons{
-  min-width: 400px;
-  height: 50px;
-  display: flex;
-  flex-direction: row;
-  justify-content: end;
-  align-items: center;
-}
-.medical-buttons div{
-  height: 30px;
-  width: 80px;
-  margin-left: 5px;
-  margin-right: 5px;
-  background: #007bff;
-  border-radius: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color:white;
-  font-size: 15px;
-}
-.data-box {
-  background-color: #ffffff; /* Light gray background */
+button[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
   padding: 10px;
-  margin: 10px;
-  text-align: left;
-  border-radius: 5px;
-  color: #3b3b3b;
-  font-size: 14px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  width: 100%;
 }
-.section-button-container{
-  min-width: 400px;
-  height: 50px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+
+button[type="submit"]:hover {
+  background-color: #45a049;
 }
-.section-button-container div{
-  height: 30px;
-  width: 80px;
-  margin-left: 10px;
-  margin-right: 10px;
-  background: #007bff;
-  border-radius: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color:white;
-  font-size: 25px;
+
+/* Section display styles */
+.section {
+  margin-top: 20px;
+}
+
+.section div {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.section button {
+  background-color: #007bff;
+  color: white;
+}
+
+.section button:hover {
+  background-color: #0056b3;
+}
+
+section h3 {
+  margin-top: 20px;
+  font-size: 18px;
 }
