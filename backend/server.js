@@ -18,7 +18,7 @@ const db = new sqlite3.Database("./database.sqlite", (err) => {
   }
 });
 
-// Example query to create a table if it doesn’t already exist
+// User Table
 db.run(
   `CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -31,6 +31,25 @@ db.run(
       console.error("Error creating table:", err.message);
     } else {
       console.log("Users table created or already exists.");
+    }
+  }
+);
+
+// Pets Table
+db.run(
+  `CREATE TABLE IF NOT EXISTS pets (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    species TEXT NOT NULL,
+    breed TEXT NOT NULL,
+    weight REAL NOT NULL,
+    age INTEGER NOT NULL
+  );`,
+  (err) => {
+    if (err) {
+      console.error("Error creating pets table:", err.message);
+    } else {
+      console.log("Pets table created or already exists.");
     }
   }
 );
@@ -96,6 +115,41 @@ app.get("/api/data", (req, res) => {
     res.json({
       data: rows,
     });
+  });
+});
+
+// Route to handle adding a new pet
+app.post("/api/pets", (req, res) => {
+  const { name, species, breed, weight, age } = req.body;
+
+  // Basic validation
+  if (!name || !species || !breed || !weight || !age) {
+    return res.status(400).json({ error: "All fields are required" });
+  }
+
+  // Insert the new pet into the 'pets' table
+  const query = `INSERT INTO pets (name, species, breed, weight, age) VALUES (?, ?, ?, ?, ?)`;
+  db.run(query, [name, species, breed, weight, age], function (err) {
+    if (err) {
+      return res.status(500).json({ error: "Failed to add pet" });
+    }
+    // Respond with the newly added pet's ID
+    res.status(201).json({ id: this.lastID, name, species, breed, weight, age });
+  });
+});
+
+// Route to get all pets
+app.get("/api/pets", (req, res) => {
+  const query = "SELECT * FROM pets"; // SQL query to get all pets
+
+  db.all(query, [], (err, rows) => {
+    if (err) {
+      console.error("Error fetching pets:", err.message);
+      return res.status(500).json({ error: "Failed to fetch pets" });
+    }
+
+    // Send the pet data as a JSON response
+    res.status(200).json(rows);
   });
 });
 

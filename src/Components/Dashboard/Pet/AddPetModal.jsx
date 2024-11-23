@@ -95,11 +95,6 @@ const AddPetModal = ({ isOpen, onClose, onAddPet }) => {
             onChange={handleChange}
             required
           />
-          <input
-            type="file"
-            accept="image/jpeg, image/png, image/jpg"
-            onChange={handleImageChange}
-          />
           <button type="submit">Add Pet</button>
         </form>
         <button className="close-button" onClick={onClose}>
