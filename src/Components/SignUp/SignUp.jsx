@@ -65,6 +65,7 @@ const SignUp = () => {
           label="Name"
           variant="outlined"
           name="name"
+          type="name"
           value={formData.name}
           onChange={handleChange}
         />
@@ -73,6 +74,7 @@ const SignUp = () => {
           label="Username"
           variant="outlined"
           name="username"
+          type="username"
           value={formData.username}
           onChange={handleChange}
         />
@@ -101,7 +103,7 @@ const SignUp = () => {
         >
           Already have an account?
         </Button>
-        <Button className="center-button" variant="contained" type="submit">
+        <Button className="center-button" variant="contained" type="submit" style={{backgroundColor: "#007bff"}}>
           Sign Up
         </Button>
       </Box>
