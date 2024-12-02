@@ -1,0 +1,91 @@
+/* General styling for the container */
+.container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+/* Header styling */
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Section buttons */
+button {
+  margin: 5px;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  background-color: #f2f2f2;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+button:hover {
+  background-color: #ddd;
+}
+
+/* Form container */
+form {
+  margin-top: 20px;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+input[type="text"],
+input[type="date"],
+textarea {
+  width: 100%;
+  padding: 8px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+button[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  width: 100%;
+}
+
+button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+/* Section display styles */
+.section {
+  margin-top: 20px;
+}
+
+.section div {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.section button {
+  background-color: #007bff;
+  color: white;
+}
+
+.section button:hover {
+  background-color: #0056b3;
+}
+
+section h3 {
+  margin-top: 20px;
+  font-size: 18px;
+}

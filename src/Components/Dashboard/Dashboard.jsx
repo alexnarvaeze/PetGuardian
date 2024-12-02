@@ -1,17 +1,29 @@
 import React, { useState } from "react";
+import axios from "axios"; // Import axios
 import AddPetModal from "./Pet/AddPetModal";
 import "./Dashboard.css";
 import SadDog from "../images/Sad-Dog.png"; // Import the sad dog image
+
+const API_URL = "http://localhost:5000/api"; // Base API URL
 
 const Dashboard = () => {
   const [pets, setPets] = useState([]); // State to hold pet list
   const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
   const [selectedPetIndex, setSelectedPetIndex] = useState(0); // State to track selected pet
 
-  const handleAddPet = (petData) => {
-    setPets([...pets, petData]); // Add new pet to the list
-    setSelectedPetIndex(pets.length); // Select the new pet immediately after adding
-    setIsModalOpen(false); // Close the modal after adding a pet
+  const handleAddPet = async (petData) => {
+    try {
+      // Send a POST request to your backend to add the new pet
+      const response = await axios.post(`${API_URL}/pets`, petData);
+
+      // If the pet is successfully added, update the pets state
+      setPets((prevPets) => [...prevPets, response.data]); // Assuming backend returns the added pet
+      setSelectedPetIndex(pets.length); // Select the new pet immediately after adding
+      setIsModalOpen(false); // Close the modal after adding a pet
+    } catch (error) {
+      console.error("Error adding pet:", error);
+      // Handle any errors here (e.g., show a notification or error message)
+    }
   };
 
   const handleNextPet = () => {

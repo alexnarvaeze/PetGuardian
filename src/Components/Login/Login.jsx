@@ -73,6 +73,7 @@ const Login = () => {
           id="outlined-username"
           label="Username"
           variant="outlined"
+          type="username"
           name="username"
           value={formData.username}
           onChange={handleChange}
@@ -97,15 +98,9 @@ const Login = () => {
         </Button>
         <Button
           className="center-button"
-          sx={{
-            backgroundColor: "rgb(71,140,209)",
-            color: "white",
-            "&:hover": {
-              backgroundColor: "rgb(0,72,120)",
-            },
-          }}
           variant="contained"
           type="submit"
+          style={{backgroundColor: "#007bff"}}
         >
           Sign In
         </Button>
