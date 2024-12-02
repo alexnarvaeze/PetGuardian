@@ -1,129 +1,145 @@
-/* src/Components/Dashboard/Dashboard.css */
+/* Scoped styles for Dashboard component */
+.dashboard-container {
+  font-family: 'Arial', sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+  margin: 0;
+  margin-top: 60px; /* Top margin for navbar */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
 
-body {
-    font-family: 'Arial', sans-serif; /* Example font, you can change this */
-    background-color: #f8f9fa; /* Light background for better contrast */
-    color: #333; /* Dark text for readability */
-    margin: 0;
-  }
-  
-  .dashboard-greeting {
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-    height: auto;
-    width: 250px;
-  }
-  
-  .dashboard-greeting h1 {
-    margin: 0;
-    font-weight: bold;
-    color: black;
-  }
-  
-  .username {
-    margin-top: 5px;
+/* Greeting Section */
+.dashboard-greeting {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 250px;
+}
+
+.dashboard-greeting h1 {
+  margin: 0;
+  font-weight: bold;
+  color: black;
+}
+
+.username {
+  margin-top: 5px;
+}
+
+/* No Pets Section */
+.no-pets-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.dog-image {
+  width: 250px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.no-pets-info {
+  margin-top: 15px;
+}
+
+.add-pet-button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-pet-button:hover {
+  background-color: #0056b3;
+}
+
+/* Pets View Section */
+.pets-view {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.pet-card {
+  background: linear-gradient(to bottom right, #087cfc, #5faaff); /* Gradient from #087cfc to a lighter blue */
+  border-radius: 10px;
+  padding: 20px;
+  margin: 10px;
+  flex: 1;
+  max-width: 400px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pet-card .pet-text {
+  color: rgb(255, 255, 255);
+  margin-right: 15px; /* Space between text and image */
+}
+
+.pet-card .pet-image {
+  border-radius: 100px;
+  width: 150px; /* Adjust size of image */
+  height: 150px;
+  object-fit: cover; /* Keep the aspect ratio of the image */
+}
+
+.pet-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Navigation Section */
+.pet-navigation {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.nav-button {
+  margin: 0 10px;
+  padding: 10px 15px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.nav-button:hover {
+  background-color: #5a6268;
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .pet-card {
+    flex-direction: column; /* Stack the content vertically on smaller screens */
+    align-items: center;
   }
 
-  .dashboard-container {
-    margin-top: 60px; /* Top margin for navbar */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
+  .pet-card .pet-text {
+    margin-right: 0; /* Remove margin on smaller screens */
   }
-  
-  .no-pets-view {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+
+  .pet-card .pet-image {
+    margin-top: 10px; /* Add spacing between image and text */
   }
-  
-  .dog-image {
-    width: 250px; /* Adjusted for better visibility */
-    height: auto;
-    border-radius: 10px; /* Rounded image corners */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
-  }
-  
-  .no-pets-info {
-    margin-top: 15px;
-  }
-  
-  .add-pet-button {
-    margin-top: 10px;
-    padding: 12px 25px; /* Increased padding */
-    font-size: 18px; /* Slightly smaller */
-    border: none; /* No border */
-    background-color: #007bff; /* Bootstrap primary color */
-    color: white; /* White text for contrast */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer;
-    transition: background-color 0.3s; /* Smooth transition */
-  }
-  
-  .add-pet-button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-  }
-  
-  .pets-view {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 1200px;
-    flex-wrap: wrap;
-    margin-top: 20px; /* Space above pets view */
-  }
-  
-  .pet-card,
-  .stats-card {
-    background-color: white; /* White background for cards */
-    border-radius: 10px; /* Rounded corners */
-    padding: 20px;
-    margin: 10px;
-    flex: 1;
-    min-width: 300px; /* Minimum width for cards */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
-    transition: transform 0.3s; /* Smooth hover effect */
-  }
-  
-  .pet-card:hover,
-  .stats-card:hover {
-    transform: translateY(-5px); /* Lift effect on hover */
-  }
-  
-  .pet-navigation {
-    flex-direction: column;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
-  .nav-button {
-    margin: 0 10px;
-    padding: 10px 15px;
-    background-color: #6c757d; /* Gray for navigation buttons */
-    color: white; /* White text for contrast */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s; /* Smooth transition */
-  }
-  
-  .nav-button:hover {
-    background-color: #5a6268; /* Darker gray on hover */
-  }
-  
-  @media (max-width: 768px) {
-    .pets-view {
-      flex-direction: column; /* Stack cards on top of each other on mobile */
-      align-items: center; /* Center align cards */
-    }
-  
-    .pet-card,
-    .stats-card {
-      width: 100%; /* Full width on mobile */
-      margin: 5px 0; /* Vertical margin */
-    }
-  }
-  
-  
+}
