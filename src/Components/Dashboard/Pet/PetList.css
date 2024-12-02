@@ -9,19 +9,32 @@
   margin-bottom: 1rem;
   border-radius: 5px;
   display: flex;
-  align-items: flex-start; /* Align image and text */
-  gap: 10px; /* Space between image and text */
+  align-items: flex-start;
+  gap: 10px;
+  position: relative; /* For better layout control */
 }
 
 .pet-card h3 {
   margin: 0;
-  font-size: 1.2rem;
+  font-size: 1.5rem; /* Larger font for the name */
   color: #007bff;
+  position: absolute; /* Place in top-left */
+  top: 10px;
+  left: 10px;
 }
 
 .pet-card p {
-  margin: 0.3rem 0;
+  margin: 0.5rem 0;
   font-size: 1rem;
+}
+
+/* Styling for the breed and age specifically */
+.pet-details {
+  margin-top: 2rem; /* Adjust margin to account for the name placement */
+}
+
+.pet-details p {
+  margin: 0.2rem 0; /* Smaller gap between lines */
 }
 
 .pet-image-container {

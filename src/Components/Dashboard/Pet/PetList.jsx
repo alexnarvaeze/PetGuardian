@@ -11,11 +11,14 @@ const PetList = ({ pets }) => {
       <h2>Your Pets</h2>
       {pets.map((pet, index) => (
         <div key={index} className="pet-card">
-          <h3>{pet.name}</h3>
-          <p>Species: {pet.species}</p>
-          <p>Breed: {pet.breed}</p>
-          <p>Weight: {pet.weight} lbs</p>
-          <p>Age: {pet.age} years</p>
+          <div>
+            <h3>{pet.name}</h3>
+            <div className="pet-details">
+              {/* Only display values, without labels */}
+              {pet.breed && <p>{pet.breed}</p>}
+              {pet.age && <p>{pet.age} years</p>}
+            </div>
+          </div>
           {pet.image && (
             <div className="pet-image-container">
               <img src={pet.image} alt={`${pet.name}`} className="pet-image" />

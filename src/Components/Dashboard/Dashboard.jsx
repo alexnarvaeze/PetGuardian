@@ -26,10 +26,6 @@ const Dashboard = () => {
     }
   };
 
-  const handlePetSelection = (index) => {
-    setSelectedPetIndex(index); // Set the selected pet by index
-  };
-
   const handleNextPet = () => {
     setSelectedPetIndex((prevIndex) =>
       prevIndex === pets.length - 1 ? 0 : prevIndex + 1
@@ -50,48 +46,48 @@ const Dashboard = () => {
         <h1 className="username">Matthew</h1>
       </div>
 
-      <div className="no-pets-view">
-        {pets.length === 0 ? (
-          <div className="no-pet-container">
-            <img
-              src={SadDog} // Use imported sad dog image
-              alt="Cute Dog"
-              className="dog-image"
-            />
-            <div className="no-pets-info">
-              <p>You have no pets, add one!</p>
-              <button
-                className="add-pet-button"
-                onClick={() => setIsModalOpen(true)}
-              >
-                +
-              </button>
+      {/* Pets View */}
+      {pets.length === 0 ? (
+        <div className="no-pets-view">
+          <img src={SadDog} alt="Cute Dog" className="dog-image" />
+          <div className="no-pets-info">
+            <p>You have no pets, add one!</p>
+            <button
+              className="add-pet-button"
+              onClick={() => setIsModalOpen(true)}
+            >
+              +
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="pets-view">
+          <div className="pet-card">
+            <div className="pet-text">
+              <h1>{pets[selectedPetIndex].name}</h1>
+              <h1>{pets[selectedPetIndex].breed}</h1>
+              <h1>{pets[selectedPetIndex].weight} years</h1>
+            </div>
+            <div className="pet-pic">
+              <img
+                className="pet-image"
+                src={pets[selectedPetIndex].image}
+                alt=""
+              />
             </div>
           </div>
-        ) : (
-          <div className="pets-view">
-            <div className="pet-card">
-              <h3>{pets[selectedPetIndex].name}</h3>
-              <p>Species: {pets[selectedPetIndex].species}</p>
-              <p>Breed: {pets[selectedPetIndex].breed}</p>
-              <p>Weight: {pets[selectedPetIndex].weight} lbs</p>
-              <p>Age: {pets[selectedPetIndex].age} years</p>
-            </div>
-          </div>
-        )}
-      </div>
+        </div>
+      )}
 
+      {/* Navigation */}
       {pets.length > 0 && (
         <div className="pet-navigation">
-          <div className="prev/next">
-            <button className="nav-button" onClick={handlePrevPet}>
-              Previous
-            </button>
-            <button className="nav-button" onClick={handleNextPet}>
-              Next
-            </button>
-          </div>
-
+          <button className="nav-button" onClick={handlePrevPet}>
+            Previous
+          </button>
+          <button className="nav-button" onClick={handleNextPet}>
+            Next
+          </button>
           <button
             className="add-pet-button"
             onClick={() => setIsModalOpen(true)}
@@ -101,7 +97,7 @@ const Dashboard = () => {
         </div>
       )}
 
-      {/* Modal for adding a pet */}
+      {/* Modal for Adding a Pet */}
       <AddPetModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
