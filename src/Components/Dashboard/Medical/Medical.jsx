@@ -231,6 +231,7 @@ const Medical = () => {
               bloodwork.map((item) => (
                 <div key={item.bloodwork_id} className="record">
                   {/* <button onClick={() => handleEdit(item.bloodwork_id)}>Edit</button> */}
+                  <p><strong>Name:</strong> {item.petId}</p>
                   <p><strong>Date:</strong> {item.date}</p>
                   <p><strong>Notes:</strong> {item.notes || "No notes"}</p>
                 </div>
@@ -277,6 +278,7 @@ const Medical = () => {
               vaccines.map((item) => (
                 <div key={item.vaccine_id} className="record">
                   {/* <button onClick={() => handleEdit(item.vaccine_id)}>Edit</button> */}
+                  <p><strong>Name:</strong> {item.petId}</p>
                   <p><strong>Vaccine:</strong> {item.vaccine}</p>
                   <p><strong>Date:</strong> {item.date}</p>
                   <p><strong>Notes:</strong> {item.notes || "No notes"}</p>
@@ -341,6 +343,7 @@ const Medical = () => {
               medications.map((item) => (
                 <div key={item.id} className="record">
                   {/* <button onClick={() => handleEdit(item.id)}>Edit</button> */}
+                  <p><strong>Name:</strong> {item.petId}</p>
                   <p><strong>Medication Name:</strong> {item.medicationName}</p>
                   <p><strong>Dosage:</strong> {item.dosage}</p>
                   <p><strong>Start Date:</strong> {item.startDate}</p>

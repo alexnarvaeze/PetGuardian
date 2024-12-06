@@ -43,6 +43,7 @@ db.run(
     species TEXT NOT NULL,
     breed TEXT NOT NULL,
     weight REAL NOT NULL,
+    image TEXT NOT NULL,
     age INTEGER NOT NULL
   );`,
   (err) => {
@@ -308,7 +309,7 @@ app.post("/api/auth/signup", (req, res) => {
 });
 
 app.get('/api/user', (req, res) => {
-  const userId = 1; // Replace this with the actual user's ID, from session or JWT
+  const userId = 1;
   
   // Query the database for the user's name
   db.get('SELECT name FROM users WHERE id = ?', [userId], (err, row) => {
@@ -370,7 +371,7 @@ app.get("/api/data", (req, res) => {
 
 // Route to handle adding a new pet
 app.post("/api/pets", (req, res) => {
-  const { name, species, breed, weight, age } = req.body;
+  const { name, species, breed, weight, age, image} = req.body;
 
   // Basic validation
   if (!name || !species || !breed || !weight || !age) {
@@ -378,8 +379,8 @@ app.post("/api/pets", (req, res) => {
   }
 
   // Insert the new pet into the 'pets' table
-  const query = `INSERT INTO pets (name, species, breed, weight, age) VALUES (?, ?, ?, ?, ?)`;
-  db.run(query, [name, species, breed, weight, age], function (err) {
+  const query = `INSERT INTO pets (name, species, breed, weight, age, image) VALUES (?, ?, ?, ?, ?, ?)`;
+  db.run(query, [name, species, breed, weight, age, image], function (err) {
     if (err) {
       return res.status(500).json({ error: "Failed to add pet" });
     }

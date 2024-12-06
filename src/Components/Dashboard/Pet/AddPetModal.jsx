@@ -5,7 +5,7 @@ import "./AddPetModal.css";
 const AddPetModal = ({ isOpen, onClose, onAddPet }) => {
   const [petData, setPetData] = useState({
     name: "",
-    species: "",
+    species: "Dog",
     breed: "",
     weight: "",
     age: "",
@@ -35,7 +35,7 @@ const AddPetModal = ({ isOpen, onClose, onAddPet }) => {
     onClose(); // Close the modal after adding pet
     setPetData({
       name: "",
-      species: "",
+      species: "Dog",
       breed: "",
       weight: "",
       age: "",
@@ -66,10 +66,6 @@ const AddPetModal = ({ isOpen, onClose, onAddPet }) => {
           >
             <option value="Dog">Dog</option>
             <option value="Cat">Cat</option>
-            <option value="Turtle">Turtle</option>
-            <option value="Hamster">Hamster</option>
-            <option value="Bird">Bird</option>
-            <option value="Fish">Fish</option>
           </select>
           <input
             type="text"
@@ -94,6 +90,11 @@ const AddPetModal = ({ isOpen, onClose, onAddPet }) => {
             value={petData.age}
             onChange={handleChange}
             required
+          />
+          <input
+            type="file"
+            accept="image/jpeg, image/png, image/jpg"
+            onChange={handleImageChange}
           />
           <button type="submit">Add Pet</button>
         </form>

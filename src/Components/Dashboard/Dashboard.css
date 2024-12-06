@@ -1,6 +1,6 @@
 /* Scoped styles for Dashboard component */
 .dashboard-container {
-  font-family: 'Arial', sans-serif;
+  font-family: 'Roboto', sans-serif;
   background-color: #f8f9fa;
   color: #333;
   margin: 0;
@@ -14,14 +14,14 @@
 /* Greeting Section */
 .dashboard-greeting {
   font-size: 1.5rem;
-  margin-bottom: 20px;
+  margin-top: 50px;
+  margin-bottom: 0px;
   width: 100%;
   max-width: 250px;
 }
 
 .dashboard-greeting h1 {
   margin: 0;
-  font-weight: bold;
   color: black;
 }
 
@@ -45,11 +45,10 @@
 }
 
 .no-pets-info {
-  margin-top: 15px;
+  margin-top: 10px;
 }
 
 .add-pet-button {
-  margin-top: 10px;
   padding: 10px 20px;
   font-size: 16px;
   border: none;
@@ -72,7 +71,7 @@
   width: 100%;
   max-width: 1200px;
   flex-wrap: wrap;
-  margin-top: 20px;
+  margin-top: 5px;
 }
 
 .pet-card {
@@ -92,6 +91,7 @@
 .pet-card .pet-text {
   color: rgb(255, 255, 255);
   margin-right: 15px; /* Space between text and image */
+  font-family: Roboto, sans-serif;
 }
 
 .pet-card .pet-image {
@@ -109,13 +109,15 @@
 .pet-navigation {
   display: flex;
   justify-content: center;
+  align-items: center;
   margin-top: 20px;
 }
 
 .nav-button {
   margin: 0 10px;
   padding: 10px 15px;
-  background-color: #6c757d;
+  background-color: #054379;
+  height: 40px;
   color: white;
   border: none;
   border-radius: 5px;
@@ -142,4 +144,17 @@
   .pet-card .pet-image {
     margin-top: 10px; /* Add spacing between image and text */
   }
+}
+
+.zipcode-finder-section {
+  background: #f9f9f9;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+.zipcode-finder-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 16px;
 }
