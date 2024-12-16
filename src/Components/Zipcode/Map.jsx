@@ -42,8 +42,7 @@ const GoogleMapsComponent = () => {
  };
 // Handle user search by zipcode
  const handleSearch = async () => {
-   const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${zipcode}&key=AIzaSyCpMg_sagE0Hccw1zYJ7RLeFhv7BfsBwSw`;
-
+   const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${zipcode}&key=`;
 
    try {
      const geocodeResponse = await fetch(geocodeUrl);
